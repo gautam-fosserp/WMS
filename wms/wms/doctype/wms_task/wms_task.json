@@ -1,0 +1,173 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2026-09-21 00:56:14.174340",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "details_section",
+  "naming_series",
+  "company",
+  "reference_doctype",
+  "item_code",
+  "source_bin",
+  "assigned_to",
+  "exception_notes",
+  "column_break_ydqj",
+  "task_type",
+  "reference_name",
+  "qty",
+  "target_bin",
+  "status",
+  "warehouse",
+  "completed_at",
+  "exception_reason",
+  "exception_reported_by",
+  "exception_reported_at"
+ ],
+ "fields": [
+  {
+   "fieldname": "details_section",
+   "fieldtype": "Section Break",
+   "label": "Details"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_ydqj",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "task_type",
+   "fieldtype": "Select",
+   "label": "Task Type",
+   "options": "\nPutaway\nPick\nCycle Count\nTransfer"
+  },
+  {
+   "fieldname": "reference_doctype",
+   "fieldtype": "Link",
+   "label": "Reference DocType",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "reference_name",
+   "fieldtype": "Dynamic Link",
+   "label": "Reference Name",
+   "options": "reference_doctype"
+  },
+  {
+   "fieldname": "item_code",
+   "fieldtype": "Link",
+   "label": "Item Code",
+   "options": "Item"
+  },
+  {
+   "fieldname": "qty",
+   "fieldtype": "Float",
+   "label": "Qty"
+  },
+  {
+   "fieldname": "source_bin",
+   "fieldtype": "Link",
+   "label": "Source Bin",
+   "options": "WMS Bin Location"
+  },
+  {
+   "fieldname": "target_bin",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Target Bin",
+   "options": "WMS Bin Location"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "\nWMS-TASK-.YYYY.-",
+   "reqd": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "\nOpen\nIn Progress\nCompleted\nException"
+  },
+  {
+   "fieldname": "assigned_to",
+   "fieldtype": "Link",
+   "label": "Assigned To",
+   "options": "User"
+  },
+  {
+   "fieldname": "warehouse",
+   "fieldtype": "Link",
+   "label": "Warehouse",
+   "options": "Warehouse"
+  },
+  {
+   "fieldname": "completed_at",
+   "fieldtype": "Datetime",
+   "label": "Completed At",
+   "read_only": 1
+  },
+  {
+   "fieldname": "exception_reason",
+   "fieldtype": "Select",
+   "label": "Exception Reason",
+   "options": "\nBin Full\nBin Damaged or Missing\nWrong Item on Task\nItem Damaged\nOther"
+  },
+  {
+   "fieldname": "exception_notes",
+   "fieldtype": "Small Text",
+   "label": "Exception Notes"
+  },
+  {
+   "fieldname": "exception_reported_by",
+   "fieldtype": "Link",
+   "label": "Exception Reported By",
+   "options": "User"
+  },
+  {
+   "fieldname": "exception_reported_at",
+   "fieldtype": "Datetime",
+   "label": "Exception Reported At",
+   "read_only": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-09-21 23:51:41.370141",
+ "modified_by": "Administrator",
+ "module": "WMS",
+ "name": "WMS Task",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
