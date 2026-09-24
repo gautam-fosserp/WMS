@@ -1,0 +1,118 @@
+{
+ "actions": [],
+ "autoname": "field:bin_id",
+ "creation": "2026-09-21 00:34:52.433296",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "details_section",
+  "warehouse",
+  "bin_id",
+  "status",
+  "current_item",
+  "column_break_knox",
+  "aisle",
+  "rack",
+  "shelf",
+  "qty_in_bin",
+  "max_capacity"
+ ],
+ "fields": [
+  {
+   "fieldname": "details_section",
+   "fieldtype": "Section Break",
+   "label": "Details"
+  },
+  {
+   "fieldname": "bin_id",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Bin ID",
+   "no_copy": 1,
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "aisle",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Aisle",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_knox",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "rack",
+   "fieldtype": "Data",
+   "label": "Rack",
+   "reqd": 1
+  },
+  {
+   "fieldname": "shelf",
+   "fieldtype": "Data",
+   "label": "Shelf",
+   "reqd": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Vacant\nOccupied\nReserved\nBlocked"
+  },
+  {
+   "fieldname": "qty_in_bin",
+   "fieldtype": "Float",
+   "label": "Qty In Bin"
+  },
+  {
+   "fieldname": "current_item",
+   "fieldtype": "Link",
+   "label": "Current Item",
+   "options": "Item"
+  },
+  {
+   "fieldname": "max_capacity",
+   "fieldtype": "Float",
+   "label": "Max Capacity"
+  },
+  {
+   "fieldname": "warehouse",
+   "fieldtype": "Link",
+   "label": "Warehouse",
+   "options": "Warehouse",
+   "reqd": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-09-21 03:30:55.584979",
+ "modified_by": "Administrator",
+ "module": "WMS",
+ "name": "WMS Bin Location",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
