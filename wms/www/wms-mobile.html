@@ -1,5 +1,6 @@
 {% extends "templates/web.html" %}
 {% block page_content %}
 <div id="app"></div>
-<script type="module" src="/assets/wms/frontend/assets/index.js"></script>
+{% if css_path %}<link rel="stylesheet" href="{{ css_path }}">{% endif %}
+<script type="module" src="{{ js_path }}"></script>
 {% endblock %}
