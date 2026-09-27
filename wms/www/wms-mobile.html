@@ -2,10 +2,6 @@
 {% block page_content %}
 <div id="app"></div>
 {% if css_path %}<link rel="stylesheet" href="{{ css_path }}">{% endif %}
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    window.csrf_token = frappe.csrf_token;
-});
-</script>
+<script>window.csrf_token = "{{ frappe.local.session.data.csrf_token }}";</script>
 <script type="module" src="{{ js_path }}"></script>
 {% endblock %}
