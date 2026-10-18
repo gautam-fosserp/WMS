@@ -52,6 +52,7 @@ app_license = "mit"
 # ------------------
 # include app icons in desk
 # app_include_icons = "wms/public/icons.svg"
+app_include_icons = ["wms/icons/wms-icons.svg"]
 
 # Home Pages
 # ----------
@@ -84,6 +85,8 @@ app_license = "mit"
 
 # before_install = "wms.install.before_install"
 # after_install = "wms.install.after_install"
+after_install = "wms.setup.install.set_default_settings"
+after_migrate = ["wms.setup.install.set_default_settings"]
 
 # Uninstallation
 # ------------
@@ -150,8 +153,22 @@ doc_events = {
 	# 	"on_trash": "method"
 	# }
     "Purchase Receipt": {
-        "on_submit": "wms.api.putaway.create_putaway_tasks"
-    }
+        "on_submit": "wms.api.putaway.create_putaway_tasks",
+        "before_cancel": "wms.api.putaway.cancel_putaway_tasks"
+    },
+    "Delivery Note": {
+        "after_insert": "wms.api.picking.auto_release_pick_tasks_on_create",
+        "before_submit": [
+            "wms.api.picking.validate_dn_submit",
+            "wms.api.packing.validate_dn_pack_before_submit",
+        ],
+        "on_submit": "wms.api.packing.seal_dn_packages_on_submit",
+        "on_trash": "wms.api.picking.release_dn_pick_reservations",
+        "before_cancel": [
+            "wms.api.picking.release_dn_pick_reservations",
+            "wms.api.packing.cancel_dn_packages",
+        ],
+    },
 }
 
 # Scheduled Tasks
@@ -202,6 +219,7 @@ doc_events = {
 # -----------------------------------------------------------
 
 # ignore_links_on_delete = ["Communication", "ToDo"]
+ignore_links_on_delete = ["WMS Task"]
 
 # Request Events
 # ----------------
@@ -256,3 +274,6 @@ doc_events = {
 # List of apps whose translatable strings should be excluded from this app's translations.
 # ignore_translatable_strings_from = []
 
+website_route_rules = [
+    {"from_route": "/wms-mobile/<path:app_path>", "to_route": "wms-mobile"},
+]

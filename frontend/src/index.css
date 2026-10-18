@@ -1,2 +1,7 @@
 @import './assets/Inter/inter.css';
 @import 'frappe-ui/src/style.css';
+
+.navbar,
+.web-footer {
+  display: none !important;
+}

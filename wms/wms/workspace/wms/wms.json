@@ -1,0 +1,63 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"h1\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Quick Access</span>\",\"col\":12}},{\"id\":\"s1\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Task List\",\"col\":3}},{\"id\":\"s2\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Bins\",\"col\":3}},{\"id\":\"s3\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Settings\",\"col\":3}},{\"id\":\"s4\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sync Report\",\"col\":3}},{\"id\":\"-nOzt4B5Nz\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Packing\",\"col\":3}},{\"id\":\"n1\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Open Tasks\",\"col\":4}}]",
+ "creation": "2026-10-07 03:45:29.253456",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "wms-warehouse",
+ "idx": 0,
+ "indicator_color": "",
+ "is_hidden": 0,
+ "label": "WMS",
+ "links": [],
+ "modified": "2026-10-14 02:33:27.694863",
+ "modified_by": "Administrator",
+ "module": "WMS",
+ "name": "WMS",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 1.0,
+ "shortcuts": [
+  {
+   "doc_view": "",
+   "label": "Task List",
+   "link_to": "WMS Task",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Packing",
+   "link_to": "WMS Package",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Bins",
+   "link_to": "WMS Bin Location",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Settings",
+   "link_to": "WMS Settings",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Sync Report",
+   "link_to": "WMS Stock Reconciliation",
+   "report_ref_doctype": "WMS Task",
+   "type": "Report"
+  }
+ ],
+ "title": "WMS"
+}

@@ -1,0 +1,192 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-09-30 02:29:48.126123",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "general_section",
+  "receiving_mode",
+  "default_quarantine_warehouse",
+  "column_break_knye",
+  "enable_qc_hold_gate_hard",
+  "capture_short_receipt_reason",
+  "default_rejected_warehouse",
+  "bin_rules_section",
+  "allow_partial_bin_fill",
+  "exclude_bin_types_from_suggestion",
+  "column_break_dtvp",
+  "default_bin_capacity",
+  "require_item_scan_on_pick",
+  "permissions_section",
+  "wms_supervisor_role",
+  "column_break_bhem",
+  "allow_pr_cancellation_with_open_tasks",
+  "picking_section",
+  "column_break_emnr",
+  "pick_release_mode",
+  "packing_section",
+  "require_pack_before_dn_submit"
+ ],
+ "fields": [
+  {
+   "fieldname": "general_section",
+   "fieldtype": "Section Break",
+   "label": "General"
+  },
+  {
+   "description": "Standard: putaway tasks fire from regular Purchase Receipts. WMS Screen: dock workers use the mobile receiving screen. Both: either path is allowed.",
+   "fieldname": "receiving_mode",
+   "fieldtype": "Select",
+   "label": "Receiving Mode",
+   "options": "Standard ERPNext Only\nWMS Receiving Screen\nBoth"
+  },
+  {
+   "fieldname": "column_break_knye",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Received stock awaiting inspection is routed here when the QC gate is soft (disabled above).",
+   "fieldname": "default_quarantine_warehouse",
+   "fieldtype": "Link",
+   "label": "Default Quarantine Warehouse",
+   "options": "Warehouse"
+  },
+  {
+   "description": "Damaged or rejected stock is routed here.\n\n",
+   "fieldname": "default_rejected_warehouse",
+   "fieldtype": "Link",
+   "label": "Default Rejected Warehouse",
+   "options": "Warehouse"
+  },
+  {
+   "fieldname": "bin_rules_section",
+   "fieldtype": "Section Break",
+   "label": "Bin Rules"
+  },
+  {
+   "default": "1",
+   "description": "If a bin has less space than the incoming qty, split the putaway task across multiple bins.",
+   "fieldname": "allow_partial_bin_fill",
+   "fieldtype": "Check",
+   "label": "Allow Partial Bin Fill"
+  },
+  {
+   "description": "Bins of these types are never suggested for putaway or picking.\n\n",
+   "fieldname": "exclude_bin_types_from_suggestion",
+   "fieldtype": "Table MultiSelect",
+   "label": "Exclude Bin Types from Suggestion",
+   "options": "WMS Bin Type Exclusion"
+  },
+  {
+   "fieldname": "column_break_dtvp",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "description": "Used when a bin has no max_capacity set. 0 means unlimited.",
+   "fieldname": "default_bin_capacity",
+   "fieldtype": "Int",
+   "label": "Default Bin Capacity"
+  },
+  {
+   "fieldname": "permissions_section",
+   "fieldtype": "Section Break",
+   "label": "Permissions"
+  },
+  {
+   "default": "WMS Supervisor",
+   "fieldname": "wms_supervisor_role",
+   "fieldtype": "Link",
+   "label": "WMS Supervisor Role",
+   "options": "Role"
+  },
+  {
+   "default": "0",
+   "description": "When enabled, items requiring inspection are blocked at receipt until a Quality Inspection is passed. Requires ERPNext QC module setup.",
+   "fieldname": "enable_qc_hold_gate_hard",
+   "fieldtype": "Check",
+   "label": "Enable QC Hold Gate (Hard)"
+  },
+  {
+   "fieldname": "column_break_bhem",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "description": "If checked, cancelling a Purchase Receipt will automatically cancel its open WMS tasks. If unchecked, cancellation is blocked until the tasks are cancelled.",
+   "fieldname": "allow_pr_cancellation_with_open_tasks",
+   "fieldtype": "Check",
+   "label": "Allow PR Cancellation with Open Tasks"
+  },
+  {
+   "default": "0",
+   "description": "When enabled, the receiving screen requires a reason whenever received qty is less than pending qty on a PO line. The reason is written back to the PO Item.",
+   "fieldname": "capture_short_receipt_reason",
+   "fieldtype": "Check",
+   "label": "Capture Short Receipt Reason"
+  },
+  {
+   "default": "0",
+   "description": "When enabled, the pick confirmation screen requires scanning the item barcode before confirming.",
+   "fieldname": "require_item_scan_on_pick",
+   "fieldtype": "Check",
+   "label": "Require Item Scan on Pick"
+  },
+  {
+   "fieldname": "picking_section",
+   "fieldtype": "Section Break",
+   "label": "Picking"
+  },
+  {
+   "default": "Manual Release",
+   "fieldname": "pick_release_mode",
+   "fieldtype": "Select",
+   "label": "Pick Release Mode",
+   "options": "Manual Release\nAuto-Release on DN Creation"
+  },
+  {
+   "description": "Manual: supervisor releases DNs from the mobile app. Auto: pick tasks are created automatically when a Draft DN is created.",
+   "fieldname": "column_break_emnr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "packing_section",
+   "fieldtype": "Section Break",
+   "label": "Packing"
+  },
+  {
+   "default": "1",
+   "description": "When enabled, a Delivery Note cannot be submitted unless every item is packed into at least one Sealed WMS Package. When disabled, any Open packages are auto-sealed on submit.",
+   "fieldname": "require_pack_before_dn_submit",
+   "fieldtype": "Check",
+   "label": "Require Packing before DN Submit"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2026-10-16 16:30:59.531550",
+ "modified_by": "Administrator",
+ "module": "WMS",
+ "name": "WMS Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
