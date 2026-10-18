@@ -1,4 +1,5 @@
 {
+  "id": "/wms-mobile/",
   "name": "WMS Warehouse",
   "short_name": "WMS",
   "description": "Warehouse management for putaway, picking and packing",
