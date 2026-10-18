@@ -5,7 +5,8 @@
     <link rel="manifest" href="/assets/wms/manifest.webmanifest">
     <meta name="theme-color" content="#0f172a">
 
-    <!-- iOS PWA Support -->
+    <!-- PWA Installation Tags (Standard & Apple) -->
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="WMS">
@@ -21,7 +22,7 @@
     <div id="app"></div>
     
     <!-- CSRF Token -->
-    <script>window.csrf_token = frappe.csrf_token;</script>
+    <script>window.csrf_token = "{{ frappe.session.csrf_token }}";</script>
     
     <!-- Service Worker Registration -->
     <script>

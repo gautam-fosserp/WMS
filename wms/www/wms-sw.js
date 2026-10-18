@@ -1,6 +1,6 @@
 // WMS service worker. Bump VERSION to force clients to drop old caches.
-const VERSION = 'v1'
-const CACHE = `wms-static-${VERSION}`
+const VERSION = Date.now().toString(); 
+const CACHE = `wms-static-${VERSION}`;
 
 const OFFLINE_HTML = `<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
