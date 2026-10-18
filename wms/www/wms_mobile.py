@@ -4,17 +4,16 @@ import glob
 
 
 def get_context(context):
-    with open("/tmp/wms_debug.txt", "a") as f:
-        f.write("get_context was called\n")
-
     context.no_cache = 1
 
-    frontend_dir = frappe.get_app_path("wms", "public", "frontend", "assets")
-    js_files = glob.glob(os.path.join(frontend_dir, "index.*.js"))
-    css_files = glob.glob(os.path.join(frontend_dir, "index.*.css"))
+    assets_dir = frappe.get_app_path("wms", "public", "frontend", "assets")
+    base = "/assets/wms/frontend/assets/"
 
-    context.js_path = f"/assets/wms/frontend/assets/{os.path.basename(js_files[0])}" if js_files else ""
-    context.css_path = f"/assets/wms/frontend/assets/{os.path.basename(css_files[0])}" if css_files else ""
+    js_files = glob.glob(os.path.join(assets_dir, "index.*.js"))
+    css_files = sorted(
+        glob.glob(os.path.join(assets_dir, "vendor.*.css"))
+        + glob.glob(os.path.join(assets_dir, "index.*.css"))
+    )
 
-    with open("/tmp/wms_debug.txt", "a") as f:
-        f.write(f"js_path={context.js_path}\n")
+    context.js_path = base + os.path.basename(js_files[0]) if js_files else ""
+    context.css_paths = [base + os.path.basename(f) for f in css_files]
