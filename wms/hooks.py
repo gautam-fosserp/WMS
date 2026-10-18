@@ -85,6 +85,7 @@ app_include_icons = ["wms/icons/wms-icons.svg"]
 
 # before_install = "wms.install.before_install"
 # after_install = "wms.install.after_install"
+before_install = "wms.setup.install.before_install"
 after_install = "wms.setup.install.set_default_settings"
 after_migrate = ["wms.setup.install.set_default_settings"]
 
