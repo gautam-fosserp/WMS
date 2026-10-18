@@ -28,7 +28,7 @@
     <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function () {
-        navigator.serviceWorker.register('/wms-sw.js', { scope: '/wms-mobile/' })
+        navigator.serviceWorker.register('/wms-sw.js', { scope: '/wms-mobile' })
           .catch(function (e) { console.error('SW registration failed:', e) })
       })
     }
