@@ -4,6 +4,14 @@
 {% for css in css_paths %}<link rel="stylesheet" href="{{ css }}">{% endfor %}
 <!-- csrf_token -->
 <script>window.csrf_token = frappe.csrf_token;</script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('/wms-sw.js', { scope: '/wms-mobile/' })
+      .catch(function (e) { console.error('SW registration failed:', e) })
+  })
+}
+</script>
 <script type="module" src="{{ js_path }}"></script>
 {% endblock %}
 
