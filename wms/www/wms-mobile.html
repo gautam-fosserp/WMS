@@ -1,7 +1,7 @@
 {% extends "templates/web.html" %}
 {% block page_content %}
 <div id="app"></div>
-{% if css_path %}<link rel="stylesheet" href="{{ css_path }}">{% endif %}
+{% for css in css_paths %}<link rel="stylesheet" href="{{ css }}">{% endfor %}
 <!-- csrf_token -->
 <script>window.csrf_token = frappe.csrf_token;</script>
 <script type="module" src="{{ js_path }}"></script>
