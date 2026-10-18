@@ -1,10 +1,10 @@
 {
-  "id": "/wms-mobile/",
+  "id": "/wms-mobile",
   "name": "WMS Warehouse",
   "short_name": "WMS",
   "description": "Warehouse management for putaway, picking and packing",
-  "start_url": "/wms-mobile/",
-  "scope": "/wms-mobile/",
+  "start_url": "/wms-mobile",
+  "scope": "/wms-mobile",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#f8fafc",
