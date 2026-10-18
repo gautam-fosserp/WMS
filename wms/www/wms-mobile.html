@@ -1,18 +1,40 @@
 {% extends "templates/web.html" %}
+
+{% block head %}
+    <!-- PWA Manifest & Theme Color -->
+    <link rel="manifest" href="/assets/wms/manifest.webmanifest">
+    <meta name="theme-color" content="#0f172a">
+
+    <!-- iOS PWA Support -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="WMS">
+    <link rel="apple-touch-icon" href="/assets/wms/icons/apple-touch-icon.png">
+
+    <!-- Dynamically loaded Vite CSS -->
+    {% for css in css_paths %}
+        <link rel="stylesheet" href="{{ css }}">
+    {% endfor %}
+{% endblock %}
+
 {% block page_content %}
-<div id="app"></div>
-{% for css in css_paths %}<link rel="stylesheet" href="{{ css }}">{% endfor %}
-<!-- csrf_token -->
-<script>window.csrf_token = frappe.csrf_token;</script>
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function () {
-    navigator.serviceWorker.register('/wms-sw.js', { scope: '/wms-mobile/' })
-      .catch(function (e) { console.error('SW registration failed:', e) })
-  })
-}
-</script>
-<script type="module" src="{{ js_path }}"></script>
+    <div id="app"></div>
+    
+    <!-- CSRF Token -->
+    <script>window.csrf_token = frappe.csrf_token;</script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('/wms-sw.js', { scope: '/wms-mobile/' })
+          .catch(function (e) { console.error('SW registration failed:', e) })
+      })
+    }
+    </script>
+    
+    <!-- Dynamically loaded Vite JS -->
+    <script type="module" src="{{ js_path }}"></script>
 {% endblock %}
 
 {% block footer %}{% endblock %}
