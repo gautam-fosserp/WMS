@@ -9,6 +9,7 @@
   "details_section",
   "warehouse",
   "bin_id",
+  "bin_type",
   "status",
   "current_item",
   "column_break_knox",
@@ -16,6 +17,7 @@
   "rack",
   "shelf",
   "qty_in_bin",
+  "qty_reserved",
   "max_capacity"
  ],
  "fields": [
@@ -71,7 +73,8 @@
    "fieldname": "current_item",
    "fieldtype": "Link",
    "label": "Current Item",
-   "options": "Item"
+   "options": "Item",
+   "read_only": 1
   },
   {
    "fieldname": "max_capacity",
@@ -84,12 +87,26 @@
    "label": "Warehouse",
    "options": "Warehouse",
    "reqd": 1
+  },
+  {
+   "fieldname": "bin_type",
+   "fieldtype": "Link",
+   "label": "Bin Type",
+   "options": "WMS Bin Type"
+  },
+  {
+   "default": "0",
+   "description": "Stock committed to open pick tasks",
+   "fieldname": "qty_reserved",
+   "fieldtype": "Float",
+   "label": "Qty Reserved",
+   "read_only": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-09-21 03:30:55.584979",
+ "modified": "2026-10-10 10:15:42.686712",
  "modified_by": "Administrator",
  "module": "WMS",
  "name": "WMS Bin Location",

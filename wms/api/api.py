@@ -22,7 +22,15 @@ def get_pending_tasks(warehouse=None):
 
 @frappe.whitelist()
 def get_current_user_info():
+    user_id = frappe.session.user
+    user_doc = frappe.db.get_value(
+        "User", user_id,
+        ["full_name", "user_image"],
+        as_dict=True,
+    ) or {}
     return {
-        "user": frappe.session.user,
-        "is_supervisor": "WMS Supervisor" in frappe.get_roles(frappe.session.user),
+        "user": user_id,
+        "full_name": user_doc.get("full_name") or user_id,
+        "user_image": user_doc.get("user_image") or "",
+        "is_supervisor": "WMS Supervisor" in frappe.get_roles(user_id),
     }

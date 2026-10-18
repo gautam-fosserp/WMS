@@ -1,0 +1,36 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-09-30 02:27:44.531805",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "bin_type"
+ ],
+ "fields": [
+  {
+   "fieldname": "bin_type",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Bin Type",
+   "options": "WMS Bin Type",
+   "reqd": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-09-30 02:47:49.948769",
+ "modified_by": "Administrator",
+ "module": "WMS",
+ "name": "WMS Bin Type Exclusion",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

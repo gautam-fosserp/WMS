@@ -1,0 +1,200 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2026-10-14 01:25:16.358061",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "details_section",
+  "naming_series",
+  "delivery_note",
+  "customer",
+  "column_break_rjsg",
+  "company",
+  "posting_date",
+  "package_type",
+  "status",
+  "items_section",
+  "package_items",
+  "totals_section",
+  "total_qty",
+  "total_items",
+  "column_break_edxl",
+  "packed_by",
+  "packed_at",
+  "sealed_by",
+  "sealed_at",
+  "notes_section",
+  "notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "details_section",
+   "fieldtype": "Section Break",
+   "label": "Details"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "\nWMS-PKG-.YYYY.-\nWMS-PKG-.YYYY.-",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_rjsg",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "delivery_note",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Delivery Note",
+   "options": "Delivery Note",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "delivery_note.customer",
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "Customer"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "default": "Today",
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Posting Date"
+  },
+  {
+   "default": "Carton",
+   "fieldname": "package_type",
+   "fieldtype": "Select",
+   "label": "Package Type",
+   "options": "\nCarton\nPallet\nEnvelope\nBag\nOther"
+  },
+  {
+   "default": "Open",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "\nOpen\nSealed\nShipped\nCancelled"
+  },
+  {
+   "fieldname": "total_qty",
+   "fieldtype": "Float",
+   "label": "Total Qty",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_edxl",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "packed_by",
+   "fieldtype": "Link",
+   "label": "Packed By",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "packed_at",
+   "fieldtype": "Datetime",
+   "label": "Packed At",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sealed_by",
+   "fieldtype": "Link",
+   "label": "Sealed By",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sealed_at",
+   "fieldtype": "Datetime",
+   "label": "Sealed At",
+   "read_only": 1
+  },
+  {
+   "fieldname": "notes_section",
+   "fieldtype": "Section Break",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "package_items",
+   "fieldtype": "Table",
+   "label": "Package Items",
+   "options": "WMS Package Item"
+  },
+  {
+   "fieldname": "totals_section",
+   "fieldtype": "Section Break",
+   "label": "Totals"
+  },
+  {
+   "fieldname": "items_section",
+   "fieldtype": "Section Break",
+   "label": "Items"
+  },
+  {
+   "fieldname": "total_items",
+   "fieldtype": "Int",
+   "label": "Distinct Items",
+   "read_only": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-10-14 01:55:03.799619",
+ "modified_by": "Administrator",
+ "module": "WMS",
+ "name": "WMS Package",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Stock Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

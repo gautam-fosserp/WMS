@@ -9,22 +9,30 @@
   "details_section",
   "naming_series",
   "company",
-  "reference_doctype",
   "item_code",
-  "source_bin",
   "assigned_to",
+  "reversed_at",
+  "reversed_by",
+  "reversal_reason",
+  "reversal_notes",
+  "exception_reason",
+  "exception_reported_by",
+  "exception_reported_at",
   "exception_notes",
   "column_break_ydqj",
-  "task_type",
+  "reference_doctype",
   "reference_name",
-  "qty",
+  "task_type",
+  "source_bin",
   "target_bin",
+  "picked_qty",
+  "qty",
   "status",
   "warehouse",
   "completed_at",
-  "exception_reason",
-  "exception_reported_by",
-  "exception_reported_at"
+  "customer",
+  "sales_order",
+  "delivery_note"
  ],
  "fields": [
   {
@@ -74,12 +82,14 @@
    "label": "Qty"
   },
   {
+   "depends_on": "eval: doc.task_type == \"Pick\"",
    "fieldname": "source_bin",
    "fieldtype": "Link",
    "label": "Source Bin",
    "options": "WMS Bin Location"
   },
   {
+   "depends_on": "eval: doc.task_type == \"Putaway\"",
    "fieldname": "target_bin",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -97,7 +107,7 @@
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Status",
-   "options": "\nOpen\nIn Progress\nCompleted\nException"
+   "options": "\nOpen\nCompleted\nException\nCancelled\nReversed"
   },
   {
    "fieldname": "assigned_to",
@@ -126,7 +136,8 @@
   {
    "fieldname": "exception_notes",
    "fieldtype": "Small Text",
-   "label": "Exception Notes"
+   "label": "Exception Notes",
+   "read_only": 1
   },
   {
    "fieldname": "exception_reported_by",
@@ -139,12 +150,61 @@
    "fieldtype": "Datetime",
    "label": "Exception Reported At",
    "read_only": 1
+  },
+  {
+   "fieldname": "reversed_at",
+   "fieldtype": "Datetime",
+   "label": "Reversed At",
+   "read_only": 1
+  },
+  {
+   "fieldname": "reversed_by",
+   "fieldtype": "Link",
+   "label": "Reversed By",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "reversal_reason",
+   "fieldtype": "Select",
+   "label": "Reversal Reason",
+   "options": "\nPR Cancelled\nWrong Item\nWrong Bin\nData Entry Error\nOther"
+  },
+  {
+   "fieldname": "reversal_notes",
+   "fieldtype": "Small Text",
+   "label": "Reversal Notes",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval: doc.task_type == \"Pick\"",
+   "fieldname": "picked_qty",
+   "fieldtype": "Float",
+   "label": "Picked Qty"
+  },
+  {
+   "fieldname": "delivery_note",
+   "fieldtype": "Link",
+   "label": "Delivery Note",
+   "options": "Delivery Note"
+  },
+  {
+   "fieldname": "sales_order",
+   "fieldtype": "Link",
+   "label": "Sales Order",
+   "options": "Sales Order"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "Customer"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-09-21 23:51:41.370141",
+ "modified": "2026-10-10 10:46:18.081171",
  "modified_by": "Administrator",
  "module": "WMS",
  "name": "WMS Task",
