@@ -1,0 +1,16 @@
+{
+  "name": "WMS Warehouse",
+  "short_name": "WMS",
+  "description": "Warehouse management for putaway, picking and packing",
+  "start_url": "/wms-mobile/",
+  "scope": "/wms-mobile/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f8fafc",
+  "theme_color": "#0f172a",
+  "icons": [
+    { "src": "/assets/wms/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/wms/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/wms/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

@@ -114,6 +114,19 @@
 
     <!-- Scrollable content -->
     <div class="px-4">
+      <!-- Load error with retry -->
+      <div
+        v-if="loadError"
+        class="mb-4 flex items-center gap-3 rounded-2xl border border-red-100 bg-red-50 px-4 py-3"
+        role="alert"
+      >
+        <span class="min-w-0 flex-1 text-sm text-red-700">{{ loadError }}</span>
+        <button
+          class="shrink-0 rounded-lg bg-red-600 px-3 py-1.5 text-sm font-semibold text-white active:bg-red-700"
+          @click="loadAll()"
+        >Retry</button>
+      </div>
+
       <!-- Putaway hero -->
       <router-link
         :to="{ name: 'TaskList' }"
@@ -185,7 +198,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { call } from 'frappe-ui'
 
 const isSupervisor = ref(false)
@@ -196,6 +209,7 @@ const exceptionCount = ref(0)
 const openPanel = ref(null)
 const loggingOut = ref(false)
 const user = ref({ name: '', image: '' })
+const loadError = ref('')
 
 function togglePanel(name) {
   openPanel.value = openPanel.value === name ? null : name
@@ -292,46 +306,25 @@ const supervisorTiles = [
   },
 ]
 
-async function loadUserInfo() {
+async function loadAll(silent = false) {
+  if (!silent) loadError.value = ''
   try {
-    const info = await call('wms.api.api.get_current_user_info')
-    isSupervisor.value = info.is_supervisor
+    const s = await call('wms.api.home.get_home_summary')
+    const info = s.user || {}
+    isSupervisor.value = !!info.is_supervisor
     user.value = {
       name: info.full_name || info.user_name || info.user || info.name || '',
       image: info.user_image || info.image || '',
     }
-    if (info.is_supervisor) loadExceptionCount()
+    receivingMode.value = s.receiving_mode || 'Standard ERPNext Only'
+    pendingCount.value = s.pending_count
+    exceptionCount.value = s.exception_count || 0
+    loadError.value = ''
   } catch (e) {
-    console.error('loadUserInfo error:', e)
-  }
-}
-
-async function loadExceptionCount() {
-  try {
-    const list = await call('wms.api.putaway.get_exception_tasks')
-    exceptionCount.value = list.length
-  } catch (e) {
-    console.error('loadExceptionCount error:', e)
-  }
-}
-
-async function loadReceivingMode() {
-  try {
-    const cfg = await call('wms.api.receiving.get_receiving_config')
-    receivingMode.value = cfg.receiving_mode || 'Standard ERPNext Only'
-  } catch (e) {
-    console.error('loadReceivingMode error:', e)
+    console.error('loadAll error:', e)
+    if (!silent) loadError.value = 'Could not load the dashboard.'
   } finally {
     receivingModeLoaded.value = true
-  }
-}
-
-async function loadPendingCount() {
-  try {
-    const tasks = await call('wms.api.api.get_pending_tasks')
-    pendingCount.value = tasks.length
-  } catch (e) {
-    console.error('loadPendingCount error:', e)
   }
 }
 
@@ -346,9 +339,20 @@ async function logout() {
   }
 }
 
+let timer = null
+
+function refreshIfVisible() {
+  if (document.visibilityState === 'visible') loadAll(true)
+}
+
 onMounted(() => {
-  loadUserInfo()
-  loadReceivingMode()
-  loadPendingCount()
+  loadAll()
+  timer = setInterval(refreshIfVisible, 60000)
+  document.addEventListener('visibilitychange', refreshIfVisible)
+})
+
+onUnmounted(() => {
+  clearInterval(timer)
+  document.removeEventListener('visibilitychange', refreshIfVisible)
 })
 </script>
