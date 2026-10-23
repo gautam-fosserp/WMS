@@ -39,14 +39,31 @@
             Forgot password?
           </button>
         </div>
+        <div class="relative">
         <input
           v-model="password"
-          type="password"
+          :type="showPassword ? 'text' : 'password'"
           autocomplete="current-password"
-          class="w-full rounded-xl border border-slate-300 bg-white p-3 text-base focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+          class="w-full rounded-xl border border-slate-300 bg-white p-3 pr-12 text-base focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
           placeholder="••••••••"
           required
         />
+          <button
+            type="button"
+            class="absolute inset-y-0 right-0 flex w-12 items-center justify-center text-slate-500 active:text-slate-700"
+            :aria-label="showPassword ? 'Hide password' : 'Show password'"
+            :aria-pressed="showPassword"
+            @click="showPassword = !showPassword"
+          >
+            <svg v-if="!showPassword" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z" />
+              <circle cx="12" cy="12" r="3" />
+            </svg>
+            <svg v-else class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17.94 17.94A10.94 10.94 0 0112 19c-7 0-11-7-11-7a19.8 19.8 0 015.06-5.94M9.9 4.24A10.9 10.9 0 0112 4c7 0 11 7 11 7a19.7 19.7 0 01-3.17 4.19M14.12 14.12a3 3 0 11-4.24-4.24M1 1l22 22" />
+            </svg>
+          </button>
+        </div>
       </div>
 
       <div v-if="errorMsg" class="rounded-lg bg-red-50 p-3 text-sm text-red-600" role="alert">
@@ -153,12 +170,14 @@ const password = ref('')
 const loading = ref(false)
 const errorMsg = ref('')
 const resetSent = ref(false)
+const showPassword = ref(false)
 
 function switchMode(next) {
   mode.value = next
   errorMsg.value = ''
   resetSent.value = false
   password.value = ''
+  showPassword.value = false
 }
 
 async function submit() {
