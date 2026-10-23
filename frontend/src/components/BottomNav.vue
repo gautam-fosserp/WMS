@@ -99,10 +99,11 @@
 
 <script setup>
 import { ref, computed, watch, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { call } from 'frappe-ui'
 
 const route = useRoute()
+const router = useRouter()
 
 const moreOpen = ref(false)
 const isSupervisor = ref(false)
@@ -110,7 +111,7 @@ const receivingMode = ref('Standard ERPNext Only')
 
 // Focused task screens hide the bar so it never competes with scanning
 // or with a screen's own primary action button.
-const hiddenOn = ['ConfirmPick', 'ConfirmPutaway', 'PackingStation', 'ReceivingForm']
+const hiddenOn = ['ConfirmPick', 'ConfirmPutaway', 'PackingStation', 'ReceivingForm', 'Login']
 const visible = computed(() => !hiddenOn.includes(route.name))
 
 const tabs = [
@@ -198,12 +199,27 @@ const moreItems = computed(() => {
 // Close the sheet whenever the user navigates
 watch(() => route.name, () => { moreOpen.value = false })
 
+// frappe-ui's call() errors don't always carry httpStatus, so check every
+// shape an auth failure can take.
+function isAuthError(e) {
+  return (
+    e?.httpStatus === 401 ||
+    e?.httpStatus === 403 ||
+    e?.exc_type === 'PermissionError' ||
+    !!e?.message?.includes('PermissionError') ||
+    !!e?.message?.includes('403') ||
+    !!e?.message?.includes('Unauthorized') ||
+    !!e?.message?.includes('Forbidden')
+  )
+}
+
 async function loadUserInfo() {
   try {
     const info = await call('wms.api.api.get_current_user_info')
-    isSupervisor.value = info.is_supervisor
+    isSupervisor.value = !!info.is_supervisor
   } catch (e) {
-    console.error('BottomNav loadUserInfo error:', e)
+    // Auth errors are expected when logged out; ignore them quietly
+    if (!isAuthError(e)) console.error('BottomNav loadUserInfo error:', e)
   }
 }
 
@@ -212,12 +228,28 @@ async function loadReceivingMode() {
     const cfg = await call('wms.api.receiving.get_receiving_config')
     receivingMode.value = cfg.receiving_mode || 'Standard ERPNext Only'
   } catch (e) {
-    console.error('BottomNav loadReceivingMode error:', e)
+    if (!isAuthError(e)) console.error('BottomNav loadReceivingMode error:', e)
   }
 }
 
-onMounted(() => {
+// Fetch only once, and only after the router has resolved to a real,
+// non-login route. On first paint route.name is undefined, which is what
+// used to slip past the old `!== 'Login'` check.
+let loaded = false
+
+function loadOnce() {
+  if (loaded) return
+  if (!route.name || route.name === 'Login') return
+  loaded = true
   loadUserInfo()
   loadReceivingMode()
+}
+
+onMounted(async () => {
+  await router.isReady()
+  loadOnce()
 })
+
+// Covers SPA navigation from Login to a protected route without a full reload
+watch(() => route.name, loadOnce)
 </script>
