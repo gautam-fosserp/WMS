@@ -52,7 +52,7 @@ app_license = "mit"
 # ------------------
 # include app icons in desk
 # app_include_icons = "wms/public/icons.svg"
-app_include_icons = ["wms/icons/wms-icons.svg"]
+app_include_icons = ["/assets/wms/icons/wms-icons.svg"]
 
 # Home Pages
 # ----------
