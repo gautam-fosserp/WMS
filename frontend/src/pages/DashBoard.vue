@@ -12,22 +12,21 @@
           <!-- Notifications -->
           <button
             class="relative flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-sm transition active:scale-95 active:bg-slate-50"
-            aria-label="Notifications"
-            @click="togglePanel('notif')"
-          >
-            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 1112 0c0 7 3 9 3 9H3s3-2 3-9" /><path d="M10.3 21a1.9 1.9 0 003.4 0" /></svg>
-            <span
-              v-if="notifCount > 0"
-              class="absolute -right-1 -top-1 flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-red-500 px-1 text-[11px] font-bold leading-none text-white ring-2 ring-slate-50"
-            >{{ notifCount > 9 ? '9+' : notifCount }}</span>
+            aria-label="Notifications" @click="togglePanel('notif')">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 8a6 6 0 1112 0c0 7 3 9 3 9H3s3-2 3-9" />
+              <path d="M10.3 21a1.9 1.9 0 003.4 0" />
+            </svg>
+            <span v-if="notifCount > 0"
+              class="absolute -right-1 -top-1 flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-red-500 px-1 text-[11px] font-bold leading-none text-white ring-2 ring-slate-50">{{
+                notifCount > 9 ? '9+' : notifCount }}</span>
           </button>
 
           <!-- Profile -->
           <button
             class="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-blue-600 text-sm font-semibold text-white shadow-sm transition active:scale-95"
-            aria-label="Profile"
-            @click="togglePanel('profile')"
-          >
+            aria-label="Profile" @click="togglePanel('profile')">
             <img v-if="user.image" :src="user.image" alt="" class="h-full w-full object-cover" />
             <span v-else>{{ initials }}</span>
           </button>
@@ -37,60 +36,51 @@
         <div v-if="openPanel" class="fixed inset-0 z-10" @click="openPanel = null"></div>
 
         <!-- Notifications panel -->
-        <Transition
-          enter-active-class="transition duration-150 ease-out"
-          enter-from-class="-translate-y-1 opacity-0"
-          enter-to-class="translate-y-0 opacity-100"
-          leave-active-class="transition duration-100 ease-in"
-          leave-from-class="translate-y-0 opacity-100"
-          leave-to-class="-translate-y-1 opacity-0"
-        >
-          <div
-            v-if="openPanel === 'notif'"
-            class="absolute right-4 top-[calc(100%-8px)] z-20 w-72 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl"
-          >
+        <Transition enter-active-class="transition duration-150 ease-out" enter-from-class="-translate-y-1 opacity-0"
+          enter-to-class="translate-y-0 opacity-100" leave-active-class="transition duration-100 ease-in"
+          leave-from-class="translate-y-0 opacity-100" leave-to-class="-translate-y-1 opacity-0">
+          <div v-if="openPanel === 'notif'"
+            class="absolute right-4 top-[calc(100%-8px)] z-20 w-72 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl">
             <div class="border-b border-slate-100 px-4 py-3 text-sm font-semibold">Notifications</div>
 
             <div v-if="notifItems.length === 0" class="flex flex-col items-center px-4 py-8 text-center">
-              <span class="mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
-                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7" /></svg>
+              <span
+                class="mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 13l4 4L19 7" />
+                </svg>
               </span>
               <p class="text-sm font-medium text-slate-700">You're all caught up</p>
             </div>
 
-            <router-link
-              v-for="n in notifItems"
-              :key="n.label"
-              :to="{ name: n.route }"
+            <router-link v-for="n in notifItems" :key="n.label" :to="{ name: n.route }"
               class="flex items-center gap-3 border-b border-slate-100 px-4 py-3 transition last:border-b-0 active:bg-slate-50"
-              @click="openPanel = null"
-            >
+              @click="openPanel = null">
               <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full" :class="n.color">
-                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
                   <path v-for="p in n.paths" :key="p" :d="p" />
                 </svg>
               </span>
               <span class="min-w-0 flex-1 text-sm text-slate-800">{{ n.label }}</span>
-              <svg class="h-4 w-4 shrink-0 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6" /></svg>
+              <svg class="h-4 w-4 shrink-0 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
             </router-link>
           </div>
         </Transition>
 
         <!-- Profile panel -->
-        <Transition
-          enter-active-class="transition duration-150 ease-out"
-          enter-from-class="-translate-y-1 opacity-0"
-          enter-to-class="translate-y-0 opacity-100"
-          leave-active-class="transition duration-100 ease-in"
-          leave-from-class="translate-y-0 opacity-100"
-          leave-to-class="-translate-y-1 opacity-0"
-        >
-          <div
-            v-if="openPanel === 'profile'"
-            class="absolute right-4 top-[calc(100%-8px)] z-20 w-64 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl"
-          >
+        <Transition enter-active-class="transition duration-150 ease-out" enter-from-class="-translate-y-1 opacity-0"
+          enter-to-class="translate-y-0 opacity-100" leave-active-class="transition duration-100 ease-in"
+          leave-from-class="translate-y-0 opacity-100" leave-to-class="-translate-y-1 opacity-0">
+          <div v-if="openPanel === 'profile'"
+            class="absolute right-4 top-[calc(100%-8px)] z-20 w-64 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl">
             <div class="flex items-center gap-3 border-b border-slate-100 px-4 py-4">
-              <span class="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-full bg-blue-600 text-sm font-semibold text-white">
+              <span
+                class="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-full bg-blue-600 text-sm font-semibold text-white">
                 <img v-if="user.image" :src="user.image" alt="" class="h-full w-full object-cover" />
                 <span v-else>{{ initials }}</span>
               </span>
@@ -101,10 +91,12 @@
             </div>
             <button
               class="flex w-full items-center gap-3 px-4 py-3 text-sm font-medium text-red-600 transition active:bg-red-50 disabled:text-slate-400"
-              :disabled="loggingOut"
-              @click="logout"
-            >
-              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" /><path d="M16 17l5-5-5-5M21 12H9" /></svg>
+              :disabled="loggingOut" @click="logout">
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
+                <path d="M16 17l5-5-5-5M21 12H9" />
+              </svg>
               {{ loggingOut ? 'Logging out…' : 'Log out' }}
             </button>
           </div>
@@ -115,25 +107,22 @@
     <!-- Scrollable content -->
     <div class="px-4">
       <!-- Load error with retry -->
-      <div
-        v-if="loadError"
-        class="mb-4 flex items-center gap-3 rounded-2xl border border-red-100 bg-red-50 px-4 py-3"
-        role="alert"
-      >
+      <div v-if="loadError" class="mb-4 flex items-center gap-3 rounded-2xl border border-red-100 bg-red-50 px-4 py-3"
+        role="alert">
         <span class="min-w-0 flex-1 text-sm text-red-700">{{ loadError }}</span>
-        <button
-          class="shrink-0 rounded-lg bg-red-600 px-3 py-1.5 text-sm font-semibold text-white active:bg-red-700"
-          @click="loadAll()"
-        >Retry</button>
+        <button class="shrink-0 rounded-lg bg-red-600 px-3 py-1.5 text-sm font-semibold text-white active:bg-red-700"
+          @click="loadAll()">Retry</button>
       </div>
 
       <!-- Putaway hero -->
-      <router-link
-        :to="{ name: 'TaskList' }"
-        class="mb-6 flex items-center gap-4 rounded-2xl bg-slate-900 p-5 text-white shadow-md transition active:scale-[0.99]"
-      >
+      <router-link :to="{ name: 'TaskList' }"
+        class="mb-6 flex items-center gap-4 rounded-2xl bg-slate-900 p-5 text-white shadow-md transition active:scale-[0.99]">
         <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white/10">
-          <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5z" /><path d="M3 13l9 5 9-5" /></svg>
+          <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3l9 5-9 5-9-5 9-5z" />
+            <path d="M3 13l9 5 9-5" />
+          </svg>
         </span>
         <div class="min-w-0 flex-1">
           <div class="text-lg font-semibold leading-tight">Putaway</div>
@@ -143,25 +132,23 @@
             <template v-else>{{ pendingCount }} {{ pendingCount === 1 ? 'task' : 'tasks' }} waiting</template>
           </div>
         </div>
-        <span
-          v-if="pendingCount"
-          class="shrink-0 rounded-full bg-blue-500 px-3 py-1 text-sm font-bold"
-        >{{ pendingCount }}</span>
-        <svg class="h-5 w-5 shrink-0 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6" /></svg>
+        <span v-if="pendingCount" class="shrink-0 rounded-full bg-blue-500 px-3 py-1 text-sm font-bold">{{ pendingCount
+          }}</span>
+        <svg class="h-5 w-5 shrink-0 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 6l6 6-6 6" />
+        </svg>
       </router-link>
 
       <!-- Operations — 2-column tile grid, gated to avoid flash -->
       <template v-if="receivingModeLoaded">
         <h2 class="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">Operations</h2>
         <nav class="mb-6 grid grid-cols-2 gap-3">
-          <router-link
-            v-for="tile in operations"
-            :key="tile.label"
-            :to="{ name: tile.route }"
-            class="flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition active:scale-[0.98] active:bg-slate-50"
-          >
+          <router-link v-for="tile in operations" :key="tile.label" :to="{ name: tile.route }"
+            class="flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition active:scale-[0.98] active:bg-slate-50">
             <span class="flex h-11 w-11 items-center justify-center rounded-xl" :class="tile.color">
-              <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
                 <path v-for="p in tile.paths" :key="p" :d="p" />
               </svg>
             </span>
@@ -177,15 +164,12 @@
       <template v-if="receivingModeLoaded && isSupervisor">
         <h2 class="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">Supervisor</h2>
         <nav class="grid grid-cols-2 gap-3">
-          <router-link
-            v-for="tile in supervisorTiles"
-            :key="tile.label"
-            :to="{ name: tile.route }"
+          <router-link v-for="tile in supervisorTiles" :key="tile.label" :to="{ name: tile.route }"
             class="flex items-center gap-3 rounded-2xl border px-3 py-3 shadow-sm transition active:scale-[0.98]"
-            :class="tile.card"
-          >
+            :class="tile.card">
             <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl" :class="tile.color">
-              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
                 <path v-for="p in tile.paths" :key="p" :d="p" />
               </svg>
             </span>
@@ -321,6 +305,26 @@ async function loadAll(silent = false) {
     exceptionCount.value = s.exception_count || 0
     loadError.value = ''
   } catch (e) {
+    // Check if the error is due to the user not being logged in or session expired.
+    const isAuthError =
+      e.httpStatus === 403 ||
+      e.httpStatus === 401 ||
+      (e.message && (
+        e.message.includes('PermissionError') ||
+        e.message.includes('403') ||
+        e.message.includes('Forbidden') ||
+        e.message.includes('Unauthorized') ||
+        e.message.includes('Login to access')
+      )) ||
+      (e.message && (e.message.includes('JSON') || e.message.includes('Unexpected token')));
+
+    if (isAuthError) {
+      // Silently redirect to the custom Vue Login page without logging an error
+      window.location.href = '/wms-mobile/login';
+      return;
+    }
+
+    // Only log to console if it's a real network/server error, not an auth redirect
     console.error('loadAll error:', e)
     if (!silent) loadError.value = 'Could not load the dashboard.'
   } finally {
@@ -335,7 +339,8 @@ async function logout() {
   } catch (e) {
     console.error('logout error:', e)
   } finally {
-    window.location.href = '/login'
+    // replace() keeps the protected page out of the back-button history
+    window.location.replace('/wms-mobile/login')
   }
 }
 

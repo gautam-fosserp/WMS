@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { call } from 'frappe-ui'
-
+import Login from './pages/Login.vue'
 import Dashboard from './pages/Dashboard.vue'
 import TaskList from './pages/TaskList.vue'
 import ConfirmPutaway from './pages/ConfirmPutaway.vue'
@@ -21,7 +21,7 @@ const router = createRouter({
   routes: [
     // Home
     { path: '/', name: 'Dashboard', component: Dashboard },
-
+    { path: '/login', name: 'Login', component: Login },
     // Putaway
     { path: '/putaway', name: 'TaskList', component: TaskList },
     { path: '/task/:taskName', name: 'ConfirmPutaway', component: ConfirmPutaway, props: true },
