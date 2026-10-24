@@ -4,13 +4,13 @@ from wms.wms.doctype.wms_settings.wms_settings import get_settings
 from wms.api.putaway import require_supervisor
 
 
-
 # Read endpoints
 @frappe.whitelist()
 def get_packable_delivery_notes(search=None):
     """
     Returns Draft DNs with packing progress, filtered by user's Company permissions.
     Optional `search` matches DN name or customer.
+    ONLY returns DNs where picking is fully completed.
     """
     user_companies = frappe.get_all(
         "User Permission",
@@ -18,7 +18,22 @@ def get_packable_delivery_notes(search=None):
         pluck="for_value",
     )
 
-    conditions = ["dn.docstatus = 0"]
+    # Enforce that picking is complete before it shows up here
+    conditions = [
+        "dn.docstatus = 0",
+        """EXISTS (
+            SELECT 1 FROM `tabWMS Task` wt
+            WHERE wt.delivery_note = dn.name
+            AND wt.task_type = 'Pick'
+            AND wt.status = 'Completed'
+        )""",
+        """NOT EXISTS (
+            SELECT 1 FROM `tabWMS Task` wt
+            WHERE wt.delivery_note = dn.name
+            AND wt.task_type = 'Pick'
+            AND wt.status IN ('Open', 'Exception')
+        )"""
+    ]
     params = {}
 
     if user_companies:
@@ -76,6 +91,19 @@ def get_dn_packing_status(dn_name):
     dn = frappe.get_doc("Delivery Note", dn_name)
     if dn.docstatus != 0:
         frappe.throw(_("Only Draft Delivery Notes can be packed."))
+
+    # Refuse to load if picking isn't done
+    open_picks = frappe.db.count("WMS Task", {
+        "delivery_note": dn_name, "task_type": "Pick", "status": ["in", ["Open", "Exception"]]
+    })
+    if open_picks:
+        frappe.throw(_("Cannot pack. {0} pick task(s) are still pending.").format(open_picks))
+
+    completed_picks = frappe.db.count("WMS Task", {
+        "delivery_note": dn_name, "task_type": "Pick", "status": "Completed"
+    })
+    if completed_picks == 0:
+        frappe.throw(_("Cannot pack. This Delivery Note has not been picked yet. Please release it for picking first."))
 
     # Map of dn_detail -> packed qty (across all non-cancelled packages)
     packed_by_row = _packed_by_dn_row(dn_name)
@@ -168,7 +196,20 @@ def start_package(dn_name, package_type="Carton"):
     if dn.docstatus != 0:
         frappe.throw(_("Only Draft Delivery Notes can be packed."))
 
-    # NEW: refuse if already fully packed
+    # Refuse if picking isn't finished
+    open_picks = frappe.db.count("WMS Task", {
+        "delivery_note": dn_name, "task_type": "Pick", "status": ["in", ["Open", "Exception"]]
+    })
+    if open_picks:
+        frappe.throw(_("Cannot pack. Picking is still in progress."))
+
+    completed_picks = frappe.db.count("WMS Task", {
+        "delivery_note": dn_name, "task_type": "Pick", "status": "Completed"
+    })
+    if completed_picks == 0:
+        frappe.throw(_("Cannot pack. Items have not been picked yet."))
+
+    # Refuse if already fully packed
     status = _compute_dn_pack_status(dn_name)
     if status["fully_packed"]:
         frappe.throw(_(
