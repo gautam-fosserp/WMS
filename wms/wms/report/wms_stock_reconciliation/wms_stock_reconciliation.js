@@ -62,7 +62,7 @@ frappe.query_reports["WMS Stock Reconciliation"] = {
         return value;
     },
 };
-x
+
 function wms_bind_card_actions() {
     $(document)
         .off(".wmsrecon")
